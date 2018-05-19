@@ -1,0 +1,15 @@
+.dub
+.project
+docs.json
+__dummy.html
+docs/
+json-patch.so
+json-patch.dylib
+json-patch.dll
+json-patch.a
+json-patch.lib
+json-patch-test-*
+*.exe
+*.o
+*.obj
+*.lst

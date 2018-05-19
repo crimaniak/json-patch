@@ -1,0 +1,20 @@
+{
+	"name": "json-patch",
+	"authors": [
+		"Alexey Kulentsov"
+	],
+	"dependencies": {
+		"json-pointer": {
+		    "path": "/home/crimaniak/dlang/libs/json-pointer"
+		}
+	},
+	"configurations": [
+		{
+			"name": "default",
+			"targetType": "library"
+		}
+  	],
+	"description": "RFC 6902 JSON Patch implementation",
+	"copyright": "Copyright © 2018, Alexey Kulentsov",
+	"license": "BSL-1.0"
+}
