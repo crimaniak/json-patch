@@ -70,6 +70,7 @@ DiffOperation[] diff(const ref JsonItem source, const ref JsonItem target,
     return result;
 }
 
+/// Convert array of DiffOperations to JSON format
 JsonItem toJson(DiffOperation[] d)
 {
 	import std.json;
