@@ -1,0 +1,14 @@
+language: d
+
+d:
+  - dmd
+  - gdc
+  - ldc
+
+script:
+  - dub test -b unittest-cov
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+sudo: false
