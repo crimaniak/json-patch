@@ -65,12 +65,15 @@ unittest
 	auto empty = parseJSON(`{}`);
 	assert(new AddOperation("", source).applyTo(empty), DiffOperation.lastError);
 	assert(empty == source);
-	
+
 	assert(new AddOperation("/objectProp/c", JsonItem(123)).applyTo(source), DiffOperation.lastError);
 	assert(new TestOperation("/objectProp/c", JsonItem(123)).applyTo(source), DiffOperation.lastError);
 	
 	assert(new AddOperation("/arrayProp/-", JsonItem("four")).applyTo(source), DiffOperation.lastError);
 	assert(new TestOperation("/arrayProp/4", JsonItem("four")).applyTo(source), DiffOperation.lastError);
+
+	assert(!new AddOperation("/arrayProp/nonInteger", JsonItem(1)).applyTo(source));
+	assert(!new AddOperation("/intProp/1", JsonItem(1)).applyTo(source));
 
 	assert(new AddOperation("/arrayProp/4", JsonItem("four again")).applyTo(source), DiffOperation.lastError);
 	assert(new TestOperation("/arrayProp/4", JsonItem("four again")).applyTo(source), DiffOperation.lastError);
@@ -86,6 +89,10 @@ unittest
 	assert(new RemoveOperation("/arrayProp/4").applyTo(source), DiffOperation.lastError);
 	assert(new TestOperation("/arrayProp/4", JsonItem("four")).applyTo(source), DiffOperation.lastError);
 	assert(new TestOperation("/arrayProp/5", JsonItem("six")).applyTo(source), DiffOperation.lastError);
+
+	assert(!new RemoveOperation("/arrayProp/100").applyTo(source));
+	assert(!new RemoveOperation("/arrayProp/nonInteger").applyTo(source));
+	assert(!new RemoveOperation("/intProp/1").applyTo(source));
 
 	assert(new RemoveOperation("/objectProp/c").applyTo(source), DiffOperation.lastError);
 	assert(JsonPointer("/objectProp/c").evaluate(source).isNull);
@@ -118,5 +125,15 @@ unittest
 	assert(new MoveOperation("/objectProp1", "/objectProp").applyTo(source), DiffOperation.lastError);
 	assert(new TestOperation("/objectProp1/name", JsonItem("nested object")).applyTo(source));
 	assert(JsonPointer("/objectProp").evaluate(source).isNull);
+
+	assert(!new MoveOperation("/objectProp", "/nonExisting").applyTo(source));
+
+	import std.exception: assertThrown;
+
+	foreach(s; [`{"op":"unknown", "path" : ""}`, `{"noop":"unknown", "path" : ""}`, `{"op": 1, "path" : ""}`, `["unknown", "path"]`, `{"op":"remove"}`])
+	{
+		auto op = parseJSON(s);
+		assertThrown(op.toOperation);
+	}
 }
 

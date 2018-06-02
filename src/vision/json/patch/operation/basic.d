@@ -21,10 +21,7 @@ class DiffOperation
 		return applyToPtr(&document);
 	}
 	
-	bool applyToPtr(JsonItem* document) const
-	{
-		throw new Exception("Not implemented"); 
-	}
+	abstract bool applyToPtr(JsonItem* document) const;
 	
 	this(const string path) @safe
 	{

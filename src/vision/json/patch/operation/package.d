@@ -15,6 +15,10 @@ DiffOperation toOperation(ref const JsonItem item)
 		throw new Exception("Incorrect operation item:" ~ item.to!string);
 			
 	auto o = item.object;
+	
+	if("path" !in o)
+		throw new Exception("No path property");
+		
 	auto path = o["path"].str;
 			
 	switch(o["op"].str)
