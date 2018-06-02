@@ -1,14 +1,23 @@
 language: d
+sudo: required
+dist: xenial
+
+services:
+  - docker
 
 d:
   - dmd
   - gdc
   - ldc
 
+before_script:
+  - if [[ "$DC" == "gdc" ]]; then docker build -t debtesting -f ci/Dockerfile .; fi
+
 script:
-  - dub test -b unittest-cov
+  - if [[ "$DC" == "gdc" ]]; then
+    docker run -t -e DC=$DC -v `pwd`:/build debtesting
+     ./ci/build-and-test.sh; fi
+  - if [[ "$DC" != "gdc" ]]; then ./ci/build-and-test.sh; fi
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-
-sudo: false
