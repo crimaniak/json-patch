@@ -40,9 +40,9 @@ library functionality:
 	JsonItem source = ...;
 	JsonItem target = ...;
 		
-	auto patch = diff(source.document, target.document).toJson;
+	auto patch = diff(source, target).toJson;
 		
-	auto patched = source.document;
+	auto patched = source;
 	patched.patchInPlace(patch);
 		
 	assert(patched == target)
