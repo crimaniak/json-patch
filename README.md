@@ -17,10 +17,10 @@ library functionality:
 
 ### Interface
 ```D
-    alias JsonItem = JSONValue;
+	alias JsonItem = JSONValue;
     
-    // diff part
-    DiffOperation[] diff(const ref JsonItem source, const ref JsonItem target,
+	// diff part
+	DiffOperation[] diff(const ref JsonItem source, const ref JsonItem target,
                            const string path = "");
 
 	JsonItem toJson(DiffOperation[] d);
