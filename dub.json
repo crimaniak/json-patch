@@ -4,9 +4,7 @@
 		"Alexey Kulentsov"
 	],
 	"dependencies": {
-		"json-pointer": {
-		    "path": "/home/crimaniak/dlang/libs/json-pointer"
-		}
+		"json-pointer": "~>0.0.3"
 	},
 	"configurations": [
 		{
